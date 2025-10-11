@@ -34,7 +34,7 @@ jobs:
     - name: Set service name and env
       id: service
       run: |
-        echo "SERVICE_NAME=webapp" >> $GITHUB_ENV
+        echo "SERVICE_NAME=api" >> $GITHUB_ENV
         if [[ "${{ env.BRANCH_NAME }}" == "main" ]]; then
           echo "ENV=prod" >> $GITHUB_ENV
         else
