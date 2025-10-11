@@ -29,8 +29,8 @@ jobs:
       run: dotnet build ./Refahi.Api.Solution.sln --configuration Release --no-restore
 
     - name: Publish Refahi.Api.csproj
-      run: dotnet publish ./src/Refahi.Api/Refahi.Api.csproj --configuration Release --no-build --output ./publish/client
-
+      run: dotnet publish ./src/Refahi.Api/Refahi.Api.csproj --configuration Release --no-build
+      
     - name: Set service name and env
       id: service
       run: |
