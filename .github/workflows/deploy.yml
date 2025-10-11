@@ -47,7 +47,7 @@ jobs:
         image: refahi-api
         tags: ${{ env.ENV }}
         registry: ghcr.io
-        dockerfile: ./src/Refahi.Api.WebApp/Dockerfile
+        dockerfile: ./src/Refahi.Api/Dockerfile
         directory: .
         username: SaeedGhaffari
         password: ${{ secrets.GH_PAT }}       
