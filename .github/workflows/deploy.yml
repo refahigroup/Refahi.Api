@@ -26,7 +26,7 @@ jobs:
       run: dotnet restore ./Refahi.Api.Solution.sln
       
     - name: Build Solution
-      run: dotnet build ./Refahi.Api.Solution.sln --configuration Release --no-restore
+      run: dotnet build ./Refahi.Api.Solution.sln --configuration Release
 
     - name: Publish Refahi.Api.csproj
       run: dotnet publish ./src/Refahi.Api/Refahi.Api.csproj --configuration Release --no-build
