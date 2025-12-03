@@ -1,11 +1,32 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11222.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Api", "src\Refahi.Api\Refahi.Api.csproj", "{73903170-EAD8-4E06-9E74-427F0A326E19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{5E9BE42F-373C-4BC7-92E7-94F964E144D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hotels", "Hotels", "{930728A2-1C0F-43BB-9131-982108DF09E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Contract", "src\Refahi.Contract\Refahi.Contract.csproj", "{1660F509-91B7-41BD-B87B-53F75B88A0BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Modules.Hotels.Domain", "src\Modules\Hotels\Refahi.Modules.Hotels.Domain\Refahi.Modules.Hotels.Domain.csproj", "{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{472FF093-0CCC-4FB8-96DB-66C6F67C1799}"
+	ProjectSection(SolutionItems) = preProject
+		Architecture.md = Architecture.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Modules.Hotels.Application", "src\Modules\Hotels\Refahi.Modules.Hotels.Application\Refahi.Modules.Hotels.Application.csproj", "{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Modules.Hotels.Infrastructure", "src\Modules\Hotels\Refahi.Modules.Hotels.Infrastructure\Refahi.Modules.Hotels.Infrastructure.csproj", "{DC3E945E-5848-42DC-878A-6C22A4368720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Modules.Hotels.Presentation", "src\Modules\Hotels\Refahi.Modules.Hotels.Presentation\Refahi.Modules.Hotels.Presentation.csproj", "{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refahi.Modules.Hotels.Application.Contract", "src\Modules\Hotels\Refahi.Modules.Hotels.Application.Contract\Refahi.Modules.Hotels.Application.Contract.csproj", "{21479516-7066-476E-9355-3DF7AA079AF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +38,44 @@ Global
 		{73903170-EAD8-4E06-9E74-427F0A326E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73903170-EAD8-4E06-9E74-427F0A326E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73903170-EAD8-4E06-9E74-427F0A326E19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1660F509-91B7-41BD-B87B-53F75B88A0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1660F509-91B7-41BD-B87B-53F75B88A0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1660F509-91B7-41BD-B87B-53F75B88A0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1660F509-91B7-41BD-B87B-53F75B88A0BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3E945E-5848-42DC-878A-6C22A4368720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3E945E-5848-42DC-878A-6C22A4368720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3E945E-5848-42DC-878A-6C22A4368720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3E945E-5848-42DC-878A-6C22A4368720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21479516-7066-476E-9355-3DF7AA079AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21479516-7066-476E-9355-3DF7AA079AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21479516-7066-476E-9355-3DF7AA079AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21479516-7066-476E-9355-3DF7AA079AF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{73903170-EAD8-4E06-9E74-427F0A326E19} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5E9BE42F-373C-4BC7-92E7-94F964E144D5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{930728A2-1C0F-43BB-9131-982108DF09E5} = {5E9BE42F-373C-4BC7-92E7-94F964E144D5}
+		{1660F509-91B7-41BD-B87B-53F75B88A0BB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{AE943B5C-5CD9-6A22-56AE-ABA5FBF02430} = {930728A2-1C0F-43BB-9131-982108DF09E5}
+		{7B788224-E9AC-42F0-A8D9-CF93BC2FC0AE} = {930728A2-1C0F-43BB-9131-982108DF09E5}
+		{DC3E945E-5848-42DC-878A-6C22A4368720} = {930728A2-1C0F-43BB-9131-982108DF09E5}
+		{892ED900-B0AC-47FC-A4D5-D8ADFB3C8853} = {930728A2-1C0F-43BB-9131-982108DF09E5}
+		{21479516-7066-476E-9355-3DF7AA079AF2} = {930728A2-1C0F-43BB-9131-982108DF09E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5F95667-558C-4E80-9CAD-7749E78CFEE9}

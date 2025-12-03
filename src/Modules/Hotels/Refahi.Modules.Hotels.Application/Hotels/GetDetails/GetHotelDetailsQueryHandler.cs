@@ -1,0 +1,24 @@
+﻿using MediatR;
+using Refahi.Modules.Hotels.Application.Contract.Providers;
+using Refahi.Modules.Hotels.Application.Contract.Providers.DTOs;
+using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
+
+namespace Refahi.Modules.Hotels.Application.Hotels.GetDetails
+{
+    public sealed class GetHotelDetailsQueryHandler: IRequestHandler<GetHotelDetailsQuery, HotelDetailsDto>
+    {
+        private readonly IHotelProvider _provider;
+
+        public GetHotelDetailsQueryHandler(IHotelProvider provider)
+        {
+            _provider = provider;
+        }
+
+        public async Task<HotelDetailsDto> Handle(
+            GetHotelDetailsQuery request,
+            CancellationToken cancellationToken)
+        {
+            return await _provider.GetHotelDetailsAsync(request);
+        }
+    }
+}
