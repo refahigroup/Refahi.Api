@@ -7,4 +7,4 @@ public sealed record GetHotelDetailsQuery(
     long HotelId,
     DateOnly? CheckIn,
     DateOnly? CheckOut
-) : IRequest<HotelDetailsDto>;
+) : IRequest<IEnumerable<HotelDetailsDto>>;

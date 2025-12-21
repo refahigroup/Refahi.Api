@@ -5,6 +5,7 @@ using Polly;
 using Polly.Extensions.Http;
 using Refahi.Modules.Hotels.Application.Contract.Providers;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Api;
+using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Commands;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Config;
 
 namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip;
@@ -13,7 +14,19 @@ internal static class DI
 {
     public static IServiceCollection UseSnappTripProvider(this IServiceCollection services, IConfiguration config)
     {
-        services.AddHttpClient<SnappTripApiClient>((sp, client) =>
+
+        //services.AddHttpClient<SnappTripApiClient>((sp, client) =>
+        //{
+        //    var opts = sp.GetRequiredService<IOptions<SnappTripOptions>>().Value;
+
+        //    client.BaseAddress = new Uri(opts.BaseUrl);
+        //    client.DefaultRequestHeaders.Add("api-key", opts.ApiKey);
+        //    client.Timeout = TimeSpan.FromSeconds(opts.TimeoutSeconds);
+        //})
+        //.AddPolicyHandler((sp, _) => CreateResiliencePolicy(sp));
+
+
+        services.AddHttpClient<Provider>((sp, client) =>
         {
             var opts = sp.GetRequiredService<IOptions<SnappTripOptions>>().Value;
 
@@ -23,7 +36,8 @@ internal static class DI
         })
         .AddPolicyHandler((sp, _) => CreateResiliencePolicy(sp));
 
-        services.AddScoped<IHotelProvider, SnappTripProvider>();
+        //services.AddScoped<IHotelProvider, SnappTripProvider>();
+        services.AddScoped<IHotelProvider, Provider>();
 
         return services;
     }

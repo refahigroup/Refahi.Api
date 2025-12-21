@@ -1,15 +1,17 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Refahi.Modules.Hotels.Application.Contract.Providers.DTOs;
 
-public sealed class HotelSearchResultDto
+public class HotelSearchResultDto
 {
-    public long HotelId { get; set; }
-    public string Name { get; set; } = default!;
-    public string CityName { get; set; } = default!;
-    public string AccommodationType { get; set; } = default!;
+    public int HotelId { get; set; }
+    public string Name { get; set; }
+    public int CityId { get; set; }
     public int Stars { get; set; }
-    public long MinCustomerPrice { get; set; }
-    public string ThumbnailUrl { get; set; } = default!;
+    public long MinPrice { get; set; }
+
 }
-
-

@@ -1,83 +1,174 @@
 ﻿using Microsoft.Extensions.Logging;
-using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contracts;
+using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contract;
 using System.Net.Http.Json;
 
-namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Api
+namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Api;
+
+public class SnappTripApiClient
 {
-    public class SnappTripApiClient
+    private readonly HttpClient _http;
+    private readonly ILogger<SnappTripApiClient> _logger;
+
+    public SnappTripApiClient(HttpClient http, ILogger<SnappTripApiClient> logger)
     {
-        private readonly HttpClient _client;
-        private readonly ILogger<SnappTripApiClient> _logger;
+        _http = http;
+        _logger = logger;
+    }
 
-        public SnappTripApiClient(HttpClient client, ILogger<SnappTripApiClient> logger)
-        {
-            _client = client;
-            _logger = logger;
-        }
+    // -----------------------------------------
+    // INTERNAL HELPERS
+    // -----------------------------------------
+    private async Task<T> GetAsync<T>(string url)
+    {
+        _logger.LogInformation("SnappTrip GET {Url}", url);
 
-        private async Task<T> GetAsync<T>(string url)
-        {
-            _logger.LogInformation("SnappTrip GET {Url}", url);
+        var response = await _http.GetAsync(url);
 
-            var response = await _client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+        if (!response.IsSuccessStatusCode)
+            await ThrowApiError(response, url);
 
-            var result = await response.Content.ReadFromJsonAsync<T>();
-            if (result == null)
-                throw new Exception("Invalid empty response from SnappTrip API.");
+        string json = await response.Content.ReadAsStringAsync();
 
-            return result;
-        }
+        _logger.LogInformation(json);
 
-        private async Task<T> PostAsync<T>(string url, object payload)
-        {
-            _logger.LogInformation("SnappTrip POST {Url}", url);
+        var result = await response.Content.ReadFromJsonAsync<T>();
+        if (result == null)
+            throw new Exception($"SnappTrip GET {url} returned NULL");
 
-            var response = await _client.PostAsJsonAsync(url, payload);
-            response.EnsureSuccessStatusCode();
+        return result;
+    }
 
-            var result = await response.Content.ReadFromJsonAsync<T>();
-            if (result == null)
-                throw new Exception("Invalid empty response from SnappTrip API.");
+    private async Task<T> PostAsync<T>(string url, object payload)
+    {
+        _logger.LogInformation("SnappTrip POST {Url}", url);
 
-            return result;
-        }
+        var response = await _http.PostAsJsonAsync(url, payload);
 
-        public Task<SnappTripAvailabilityResponse> SearchHotelsAsync(int cityId, DateOnly checkIn, DateOnly checkOut)
-        {
-            var url = $"/availability/cities?city_id={cityId}&checkin={checkIn:yyyy-MM-dd}&checkout={checkOut:yyyy-MM-dd}";
-            return GetAsync<SnappTripAvailabilityResponse>(url);
-        }
+        if (!response.IsSuccessStatusCode)
+            await ThrowApiError(response, url);
 
-        public Task<SnappTripHotelDetailsResponse> GetHotelDetailsAsync(long hotelId)
-        {
-            var url = $"/hotels?hotel_id={hotelId}";
-            return GetAsync<SnappTripHotelDetailsResponse>(url);
-        }
+        string json = await response.Content.ReadAsStringAsync();
 
-        public Task<SnappTripBookingCreateResponse> CreateBookingAsync(object body)
-        {
-            return PostAsync<SnappTripBookingCreateResponse>("/booking/create", body);
-        }
+        var result = await response.Content.ReadFromJsonAsync<T>();
+        if (result == null)
+            throw new Exception($"SnappTrip POST {url} returned NULL");
 
-        public Task<SnappTripBookingStatusResponse> GetBookingStatusAsync(string code)
-        {
-            var url = $"/booking/{code}";
-            return GetAsync<SnappTripBookingStatusResponse>(url);
-        }
+        return result;
+    }
 
-        public async Task LockBookingAsync(string code)
-        {
-            _logger.LogInformation("SnappTrip LOCK {Code}", code);
-            var response = await _client.PostAsync($"/booking/{code}/lock", null);
-            response.EnsureSuccessStatusCode();
-        }
+    private async Task ThrowApiError(HttpResponseMessage response, string url)
+    {
+        var err = await response.Content.ReadFromJsonAsync<SnappTripApiError>();
+        var message = $"SnappTrip Error calling {url}. " +
+                      $"Status={(int)response.StatusCode}, " +
+                      $"Code={err?.code}, " +
+                      $"Message={err?.message}, Trace={err?.trace_id}";
 
-        public async Task ConfirmBookingAsync(string code)
-        {
-            _logger.LogInformation("SnappTrip CONFIRM {Code}", code);
-            var response = await _client.PostAsync($"/booking/{code}/confirm", null);
-            response.EnsureSuccessStatusCode();
-        }
+        _logger.LogError(message);
+        throw new Exception(message);
+    }
+
+    // ============================================================
+    // 1) CITY AVAILABILITY
+    // ============================================================
+
+    public Task<SnappTripCityAvailabilityResponse> SearchCityAvailabilityAsync(
+        SnappTripCityAvailabilityRequest request)
+    {
+        return PostAsync<SnappTripCityAvailabilityResponse>("/availability/cities", request);
+    }
+
+    // ============================================================
+    // 2) HOTEL DETAILS (STATIC)
+    // ============================================================
+
+    public Task<SnappTripHotelDetailsResponse> GetHotelDetailsAsync(long hotelId)
+    {
+        return GetAsync<SnappTripHotelDetailsResponse>($"/hotels/?id={hotelId}");
+    }
+
+    // ============================================================
+    // 3) HOTEL ROOMS (STATIC)
+    // ============================================================
+
+    public Task<SnappTripHotelRoomsResponse> GetHotelRoomsAsync(long hotelId)
+    {
+        return GetAsync<SnappTripHotelRoomsResponse>($"/hotels/rooms?id={hotelId}");
+    }
+
+    // ============================================================
+    // 4) HOTEL FACILITIES (STATIC)
+    // ============================================================
+
+    public Task<SnappTripHotelFacilitiesResponse> GetHotelFacilitiesAsync(long hotelId)
+    {
+        return GetAsync<SnappTripHotelFacilitiesResponse>($"/hotels/facilities?id={hotelId}");
+    }
+
+    // ============================================================
+    // 5) HOTEL GALLERIES (STATIC)
+    // ============================================================
+
+    public Task<IEnumerable<SnappTripHotelGalleriesResponse>> GetHotelGalleriesAsync(long hotelId)
+    {
+        return GetAsync<IEnumerable<SnappTripHotelGalleriesResponse>>($"/hotels/galleries?id={hotelId}");
+    }
+
+    // ============================================================
+    // 6) HOTEL AVAILABILITY (REAL-TIME)
+    // ============================================================
+
+    public Task<SnappTripAvailabilityResponse> GetHotelAvailabilityAsync(
+        long hotelId,
+        string checkIn,
+        string checkOut)
+    {
+        var url =
+            $"/availability/hotels?id={hotelId}&checkin={checkIn}&checkout={checkOut}";
+        return GetAsync<SnappTripAvailabilityResponse>(url);
+    }
+
+    // ============================================================
+    // 7) CREATE BOOKING
+    // ============================================================
+
+    public Task<SnappTripBookingCreateResponse> CreateBookingAsync(SnappTripCreateBookingRequest req)
+    {
+        return PostAsync<SnappTripBookingCreateResponse>("/booking/create", req);
+    }
+
+    // ============================================================
+    // 8) BOOKING STATUS
+    // ============================================================
+
+    public Task<SnappTripBookingStatusResponse> GetBookingStatusAsync(string reservationCode)
+    {
+        return GetAsync<SnappTripBookingStatusResponse>($"/booking/{reservationCode}");
+    }
+
+    // ============================================================
+    // 9) BOOKING LOCK
+    // ============================================================
+
+    public async Task LockBookingAsync(string reservationCode)
+    {
+        _logger.LogInformation("SnappTrip POST /booking/{code}/lock", reservationCode);
+
+        var res = await _http.PostAsync($"/booking/{reservationCode}/lock", null);
+
+        if (!res.IsSuccessStatusCode)
+            await ThrowApiError(res, $"/booking/{reservationCode}/lock");
+    }
+
+    // ============================================================
+    // 10) BOOKING CONFIRM
+    // ============================================================
+
+    public Task<SnappTripBookingStatusResponse> ConfirmBookingAsync(string reservationCode)
+    {
+        return PostAsync<SnappTripBookingStatusResponse>(
+            $"/booking/{reservationCode}/confirm",
+            new { }  // body خالی
+        );
     }
 }

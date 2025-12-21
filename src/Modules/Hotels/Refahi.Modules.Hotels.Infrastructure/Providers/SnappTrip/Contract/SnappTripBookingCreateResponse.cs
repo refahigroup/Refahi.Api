@@ -1,8 +1,8 @@
-﻿namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contracts;
+﻿namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contract;
 
-public class SnappTripBookingCreateResponse
+public sealed class SnappTripBookingCreateResponse
 {
-    public string code { get; set; } = default!;
-    public long price { get; set; }
-    public long? lock_seconds { get; set; }
+    public string reservation_code { get; set; } = default!;
+    public int price { get; set; }
+    public string state { get; set; } = default!;
 }

@@ -7,7 +7,7 @@ public interface IHotelProvider
 {
     Task<IEnumerable<HotelSearchResultDto>> SearchHotelsAsync(SearchHotelsQuery query);
 
-    Task<HotelDetailsDto> GetHotelDetailsAsync(GetHotelDetailsQuery query);
+    Task<IEnumerable<HotelDetailsDto>> GetHotelDetailsAsync(GetHotelDetailsQuery query);
 
     Task<ProviderBookingCreateResultDto> CreateBookingAsync(BookingDraftDto dto);
 

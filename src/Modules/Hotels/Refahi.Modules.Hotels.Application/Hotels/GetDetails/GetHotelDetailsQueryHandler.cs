@@ -5,7 +5,7 @@ using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
 
 namespace Refahi.Modules.Hotels.Application.Hotels.GetDetails
 {
-    public sealed class GetHotelDetailsQueryHandler: IRequestHandler<GetHotelDetailsQuery, HotelDetailsDto>
+    public sealed class GetHotelDetailsQueryHandler: IRequestHandler<GetHotelDetailsQuery, IEnumerable<HotelDetailsDto>>
     {
         private readonly IHotelProvider _provider;
 
@@ -14,9 +14,7 @@ namespace Refahi.Modules.Hotels.Application.Hotels.GetDetails
             _provider = provider;
         }
 
-        public async Task<HotelDetailsDto> Handle(
-            GetHotelDetailsQuery request,
-            CancellationToken cancellationToken)
+        public async Task<IEnumerable<HotelDetailsDto>> Handle(GetHotelDetailsQuery request, CancellationToken cancellationToken)
         {
             return await _provider.GetHotelDetailsAsync(request);
         }

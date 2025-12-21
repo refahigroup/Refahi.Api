@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Refahi.Api.Infrastructure.Extensions;
+namespace Refahi.Modules.Hotels.Infrastructure.Extensions;
 
 public static class MigrationExtensions
 {

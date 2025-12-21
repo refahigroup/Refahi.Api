@@ -7,7 +7,7 @@ using Refahi.Modules.Hotels.Infrastructure.Persistence;
 using Refahi.Modules.Hotels.Infrastructure.Persistence.Repositories;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Config;
-using Refahi.Api.Infrastructure.Extensions;
+using Refahi.Modules.Hotels.Infrastructure.Extensions;
 
 namespace Refahi.Modules.Hotels.Infrastructure;
 
