@@ -5,6 +5,7 @@ using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Api;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contract;
 using Refahi.Contract.Extensions;
+using Refahi.Modules.Hotels.Application.Contract.Services.Statics.Cities;
 
 
 namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
@@ -32,8 +33,8 @@ namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
                 city_id = query.CityId,
                 checkin = query.CheckIn.ToString("yyyy-MM-dd"),
                 checkout = query.CheckOut.ToString("yyyy-MM-dd"),
-                adults = query.Adults,
-                children = query.Children,
+                adults = query.Adults ?? 0,
+                children = query.Children ?? 0,
                 available_rooms = 1,
                 min_price = 0,
                 max_price = 0,
@@ -106,7 +107,7 @@ namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
                 galleryUrls.Add(h.cover.url);
 
             if (galleriesRes.First().gallery is { Count: > 0 })
-                galleryUrls.AddRange(galleriesRes.First().gallery.Select( x => x.url));
+                galleryUrls.AddRange(galleriesRes.First().gallery.Select(x => x.url));
 
             // Rooms
             var roomDtos = new List<HotelRoomDto>();
@@ -200,6 +201,11 @@ namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
         public Task<ProviderBookingStatusDto> GetBookingStatusAsync(string providerBookingCode)
         {
             // TODO: call _apiClient.GetBookingStatusAsync(providerBookingCode)
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<GetCitiesResponse>> GetAllCities(string? name)
+        {
             throw new NotImplementedException();
         }
     }

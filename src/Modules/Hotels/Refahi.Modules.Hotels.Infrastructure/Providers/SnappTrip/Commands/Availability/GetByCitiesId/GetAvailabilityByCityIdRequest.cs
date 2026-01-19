@@ -1,4 +1,6 @@
-﻿using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
+﻿using Refahi.Modules.Hotels.Application.Contract.Providers.DTOs.Availability.AvailabilityByCity;
+using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
+using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Extensions;
 using System.Text.Json.Serialization;
 
 namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Commands.Availability.ByCities;
@@ -10,10 +12,10 @@ public class GetAvailabilityByCityIdRequest
     public int CityId { get; set; }
 
     [JsonPropertyName("checkin")]
-    public string Checkin { get; set; } = string.Empty;
+    public string Checkin { get; set; }
 
     [JsonPropertyName("checkout")]
-    public string Checkout { get; set; } = string.Empty;
+    public string Checkout { get; set; }
 
     [JsonPropertyName("adults")]
     public int? Adults { get; set; }
@@ -31,26 +33,26 @@ public class GetAvailabilityByCityIdRequest
     public int? MaxPrice { get; set; }
 
     [JsonPropertyName("stars")]
-    public List<int>? Stars { get; set; }
+    public int[]? Stars { get; set; }
 
     [JsonPropertyName("accommodations")]
-    public List<string>? Accommodations { get; set; }
+    public string[]? Accommodations { get; set; }
 
 
-    public static GetAvailabilityByCityIdRequest Create(SearchHotelsQuery dto)
+    public static GetAvailabilityByCityIdRequest Create(GetAvailabilityByCityQuery dto)
     {
         return new GetAvailabilityByCityIdRequest
         {
             CityId = dto.CityId,
-            Checkin = dto.CheckIn.ToString("yyyy-MM-dd"),
-            Checkout = dto.CheckOut.ToString("yyyy-MM-dd"),
+            Checkin = dto.CheckIn.ToDateString(),
+            Checkout = dto.CheckOut.ToDateString(),
             Adults = dto.Adults,
             Children = dto.Children,
-            AvailableRooms = 1,
-            MinPrice = 0,
-            MaxPrice = 0,
-            Stars = new List<int>(),
-            Accommodations = new List<string>()
+            AvailableRooms = dto.AvailableRooms,
+            MinPrice = dto.MinPrice,
+            MaxPrice = dto.MaxPrice,
+            Stars = dto.Stars,
+            Accommodations = dto.Accommodations
         };
     }
 }

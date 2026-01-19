@@ -8,8 +8,8 @@ public class GetAvailabilityCalendarByHotelIdRequest
     public int HotelId { get; set; }
 
     [JsonPropertyName("from")]
-    public string From { get; set; } = string.Empty;
+    public DateOnly From { get; set; }
 
     [JsonPropertyName("to")]
-    public string To { get; set; } = string.Empty;
+    public DateOnly To { get; set; }
 }

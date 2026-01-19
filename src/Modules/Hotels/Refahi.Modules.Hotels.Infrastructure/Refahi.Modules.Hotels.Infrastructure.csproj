@@ -31,8 +31,4 @@
     <ProjectReference Include="..\Refahi.Modules.Hotels.Domain\Refahi.Modules.Hotels.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Providers\SnappTrip\Commands\Availability\GetByHotelId\" />
-  </ItemGroup>
-
 </Project>

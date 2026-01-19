@@ -9,8 +9,8 @@ public static class ApiHelper
     {
         var response = await client.GetAsync(url);
 
-        //if (!response.IsSuccessStatusCode)
-        //    await ThrowApiError(response, url);
+        if (!response.IsSuccessStatusCode)
+            await ThrowApiError(response, url);
 
         string json = await response.Content.ReadAsStringAsync();
 
@@ -25,8 +25,8 @@ public static class ApiHelper
     {
         var response = await client.PostAsJsonAsync(url, payload);
 
-        //if (!response.IsSuccessStatusCode)
-        //    await ThrowApiError(response, url);
+        if (!response.IsSuccessStatusCode)
+            await ThrowApiError(response, url);
 
         string json = await response.Content.ReadAsStringAsync();
 
@@ -49,6 +49,7 @@ public static class ApiHelper
     private static async Task ThrowApiError(HttpResponseMessage response, string url)
     {
         var err = await response.Content.ReadFromJsonAsync<SnappTripApiError>();
+
         var message = $"SnappTrip Error calling {url}. " +
                       $"Status={(int)response.StatusCode}, " +
                       $"Code={err?.code}, " +

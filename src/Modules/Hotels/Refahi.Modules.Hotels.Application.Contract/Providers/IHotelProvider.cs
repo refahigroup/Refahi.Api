@@ -1,11 +1,22 @@
 ﻿using Refahi.Modules.Hotels.Application.Contract.Providers.DTOs;
+using Refahi.Modules.Hotels.Application.Contract.Providers.DTOs.Availability.AvailabilityByCity;
 using Refahi.Modules.Hotels.Application.Contract.Providers.Queries;
+using Refahi.Modules.Hotels.Application.Contract.Services.Statics.Cities;
 
 namespace Refahi.Modules.Hotels.Application.Contract.Providers;
 
 public interface IHotelProvider
 {
-    Task<IEnumerable<HotelSearchResultDto>> SearchHotelsAsync(SearchHotelsQuery query);
+
+    // Availability
+    Task<GetAvailabilityByCityDto> GetAvailabilityByCity(GetAvailabilityByCityQuery query);
+
+
+
+
+
+
+
 
     Task<IEnumerable<HotelDetailsDto>> GetHotelDetailsAsync(GetHotelDetailsQuery query);
 
@@ -16,5 +27,9 @@ public interface IHotelProvider
     Task ConfirmBookingAsync(string providerBookingCode);
 
     Task<ProviderBookingStatusDto> GetBookingStatusAsync(string providerBookingCode);
+
+
+
+    Task<IEnumerable<GetCitiesResponse>> GetAllCities(string? name);
 }
 
