@@ -6,6 +6,7 @@ using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Api;
 using Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip.Contract;
 using Refahi.Contract.Extensions;
 using Refahi.Modules.Hotels.Application.Contract.Services.Statics.Cities;
+using Refahi.Modules.Hotels.Application.Contract.Providers.DTOs.Availability.AvailabilityByCity;
 
 
 namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
@@ -46,15 +47,15 @@ namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
 
             // Map از SnappTripCityAvailabilityResponse به HotelSearchResultDto
             return response.items.Select(x => new HotelSearchResultDto
-            {
-                HotelId = x.hotel.id,
-                Name = x.hotel.title,
-                CityId = x.city_id,
-                Stars = x.hotel.stars,
-                MinPrice = x.room.price_off > 0 ? x.room.price_off : x.room.price,
+            (
+                x.hotel.id,
+                x.hotel.title,
+                x.city_id,
+                x.hotel.stars,
+                x.room.price_off > 0 ? x.room.price_off : x.room.price
                 //Currency = "IRR",
                 //ThumbnailUrl = null // برای thumbnail بعداً می‌توانیم از galleries استفاده کنیم
-            });
+            ));
         }
 
         // ---------------------------------------------------------
@@ -205,6 +206,11 @@ namespace Refahi.Modules.Hotels.Infrastructure.Providers.SnappTrip
         }
 
         public Task<IEnumerable<GetCitiesResponse>> GetAllCities(string? name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetAvailabilityByCityDto> GetAvailabilityByCity(GetAvailabilityByCityQuery query)
         {
             throw new NotImplementedException();
         }

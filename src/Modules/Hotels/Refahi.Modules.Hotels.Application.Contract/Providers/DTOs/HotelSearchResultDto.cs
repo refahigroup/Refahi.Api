@@ -8,5 +8,6 @@ public sealed record HotelSearchResultDto
     int HotelId,
     string Name,
     int CityId,
-    int? Stars
+    int? Stars,
+    decimal MinPrice
 );

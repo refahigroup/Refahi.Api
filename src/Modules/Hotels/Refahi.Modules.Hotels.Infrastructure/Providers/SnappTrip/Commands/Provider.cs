@@ -77,10 +77,7 @@ public class Provider : IHotelProvider
         return result;
 
     }
-    public async Task<>
-
-
-
+    
     public Task ConfirmBookingAsync(string providerBookingCode)
     {
         throw new NotImplementedException();
